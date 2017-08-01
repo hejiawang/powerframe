@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.wang.powerframe.helper.DatabaseHelper;
 import com.wang.powerframe.model.Customer;
 import com.wang.powerframe.service.CustomerService;
 
@@ -26,7 +27,7 @@ public class CustomerServiceTest {
 	
 	@Before
 	public void init() {
-		// TODO 初始化数据库
+		DatabaseHelper.executeSqlFile("sql/customer_init.sql");
 	}
 	
 	@Test

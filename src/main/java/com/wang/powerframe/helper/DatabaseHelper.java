@@ -1,5 +1,8 @@
 package com.wang.powerframe.helper;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -234,6 +237,24 @@ public final class DatabaseHelper {
 	 */
 	public static String getTableName( Class<?> entityClass ) {
 		return entityClass.getSimpleName();
-		
+	}
+	
+	/**
+	 * 执行 SQL 文件
+	 * 仅限文件中每一行都是完整sql的文件
+	 * @param filePath
+	 */
+	public static void executeSqlFile( String filePath ) {
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+		try {
+			String sql;
+			while( ( sql = reader.readLine() ) != null ) {
+				executeUpdate(sql);
+			}
+		} catch (Exception e) {
+			LOGGER.error("execute sql file failure", e);
+			throw new RuntimeException(e);
+		}
 	}
 }
