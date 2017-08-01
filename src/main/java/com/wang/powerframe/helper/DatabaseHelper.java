@@ -3,6 +3,7 @@ package com.wang.powerframe.helper;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -14,6 +15,7 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.wang.powerframe.util.CollectionUtil;
 import com.wang.powerframe.util.PropsUtil;
 
 /**
@@ -186,5 +188,81 @@ public final class DatabaseHelper {
 		}
 		
 		return rows;
+	}
+	
+	/**
+	 * 插入实体
+	 * @param entityClass
+	 * @param fieldMap
+	 * @return
+	 */
+	public static <T> boolean insertEntity( Class<T> entityClass, Map<String, Object> fieldMap ) {
+		if( CollectionUtil.isEmpty(fieldMap) ) {
+			LOGGER.error("can not insert entity : fieldMap isempty");
+			return false;
+		}
+		
+		String sql = "INSERT INTO " + getTableName(entityClass);
+		StringBuilder columns = new StringBuilder("(");
+		StringBuilder values = new StringBuilder("(");
+		for( String fieldName : fieldMap.keySet() ) {
+			columns.append(fieldName).append(", ");
+			values.append("?, ");
+		}
+		columns.replace(columns.lastIndexOf(", "), columns.length(), ")");
+		values.replace(values.lastIndexOf(", "), values.length(), ")");
+		sql += columns + " VALUES " + values;
+		
+		Object[] params = fieldMap.values().toArray();
+		return 1 == executeUpdate(sql, params);
+	}
+	
+	/**
+	 * 更新实体
+	 * @param entityClass
+	 * @param id
+	 * @param fieldMap
+	 * @return
+	 */
+	public static <T> boolean updateEntity( Class<T> entityClass, long id, Map<String, Object> fieldMap ) {
+		if( CollectionUtil.isEmpty(fieldMap) ) {
+			LOGGER.error("can not update entity : fieldMap isempty");
+			return false;
+		}
+		
+		String sql = "UPDATE " + getTableName(entityClass) + " SET ";
+		StringBuilder columns = new StringBuilder();
+		for( String fieldName : fieldMap.keySet() ) {
+			columns.append(fieldName).append("=?, ");
+		}
+		sql += columns.substring(0, columns.lastIndexOf(",")) + " WHERE id=?";
+		
+		List<Object> paramList = new ArrayList<Object>();
+		paramList.addAll(fieldMap.values());
+		paramList.add(id);
+		Object[] params = paramList.toArray();
+		
+		return 1 == executeUpdate(sql, params);
+	}
+	
+	/**
+	 * 删除实体
+	 * @param entityClass
+	 * @param id
+	 * @return
+	 */
+	public static <T> boolean deleteEntity( Class<T> entityClass, long id ) {
+		String sql = "DELETE FROM " + getTableName(entityClass) + " WHERE ID = ?";
+		return 1 == executeUpdate(sql, id);
+	}
+	
+	/**
+	 * 获取类名
+	 * @param entityClass
+	 * @return
+	 */
+	public static String getTableName( Class<?> entityClass ) {
+		return entityClass.getSimpleName();
+		
 	}
 }

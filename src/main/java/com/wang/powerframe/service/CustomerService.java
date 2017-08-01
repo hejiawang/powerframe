@@ -44,8 +44,7 @@ public class CustomerService {
 	 * @return
 	 */
 	public boolean createCustomer(Map<String, Object> fieldMap) {
-		String sql = "insert into customer(name,contact,telephone,email,remark) values (?, ?, ?, ?, ?)";
-		return DatabaseHelper.executeUpdate(sql) > 0;
+		return DatabaseHelper.insertEntity(Customer.class, fieldMap);
 	}
 	
 	/**
@@ -55,8 +54,7 @@ public class CustomerService {
 	 * @return
 	 */
 	public boolean updateCustomer( long id, Map<String, Object> fieldMap ) {
-		String sql = "update customer set name =?, contact = ?, telephone = ?, email = ?, remark = ? where id = ?";
-		return DatabaseHelper.executeUpdate(sql, fieldMap.get("name"), fieldMap.get("contact"), fieldMap.get("telephone"), fieldMap.get("email"), fieldMap.get("remark")) > 0;
+		return DatabaseHelper.updateEntity(Customer.class, id, fieldMap);
 	}
 	
 	/**
@@ -65,7 +63,6 @@ public class CustomerService {
 	 * @return
 	 */
 	public boolean deleteCustomer( long id ) {
-		String sql = "delete from customer where id = ?";
-		return DatabaseHelper.executeUpdate(sql, id) > 0;
+		return DatabaseHelper.deleteEntity(Customer.class, id);
 	}
 }
