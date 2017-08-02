@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.wang.powerframe.service.CustomerService;
+import com.wang.powerframe.util.CastUtil;
+
 /**
  * 删除客户
  * @author HeJiawang
@@ -18,9 +21,23 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 public class CustomerDeleteServlet extends HttpServlet {
 
+	/**
+	 * customerServlet
+	 */
+	private CustomerService customerService;
+	
+	@Override
+	public void init() throws ServletException {
+		customerService = new CustomerService();
+	}
+	
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		long id = CastUtil.castLong(req.getParameter("id"));
+		boolean success = customerService.deleteCustomer(id);
+		if( success ) {
+			resp.sendRedirect("/customer");
+		}
 	}
 
 }
