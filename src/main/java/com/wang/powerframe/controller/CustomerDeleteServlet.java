@@ -17,7 +17,7 @@ import com.wang.powerframe.util.CastUtil;
  * @date   2017.07.30
  *
  */
-@WebServlet("/customer_delete")
+//@WebServlet("/customer_delete")
 @SuppressWarnings("serial")
 public class CustomerDeleteServlet extends HttpServlet {
 

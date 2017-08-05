@@ -19,7 +19,7 @@ import com.wang.powerframe.service.CustomerService;
  * @date   2017.07.30
  *
  */
-@WebServlet("/customer_create")
+//@WebServlet("/customer_create")
 @SuppressWarnings("serial")
 public class CustomerCreateServlet extends HttpServlet {
 	

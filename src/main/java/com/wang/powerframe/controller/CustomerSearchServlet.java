@@ -18,7 +18,7 @@ import com.wang.powerframe.util.CastUtil;
  * @date   2017.07.30
  *
  */
-@WebServlet("/customer_search")
+//@WebServlet("/customer_search")
 @SuppressWarnings("serial")
 public class CustomerSearchServlet extends HttpServlet {
 
