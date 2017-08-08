@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.wang.powerframe.helper.DatabaseHelper;
 import com.wang.powerframe.model.Customer;
+import com.wang.powerframeJ.annotation.Service;
 
 /**
  * 提供客户数据服务
@@ -15,6 +16,7 @@ import com.wang.powerframe.model.Customer;
  * @date   2017.07.30
  */
 @SuppressWarnings("unused")
+@Service
 public class CustomerService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
