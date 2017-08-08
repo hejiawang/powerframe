@@ -6,9 +6,10 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wang.powerframe.helper.DatabaseHelper;
 import com.wang.powerframe.model.Customer;
 import com.wang.powerframeJ.annotation.Service;
+import com.wang.powerframeJ.annotation.Transaction;
+import com.wang.powerframeJ.helper.DatabaseHelper;
 
 /**
  * 提供客户数据服务
@@ -45,6 +46,7 @@ public class CustomerService {
 	 * @param fieldMap 客户信息
 	 * @return
 	 */
+	@Transaction
 	public boolean createCustomer(Map<String, Object> fieldMap) {
 		return DatabaseHelper.insertEntity(Customer.class, fieldMap);
 	}
@@ -55,6 +57,7 @@ public class CustomerService {
 	 * @param fieldMap 客户信息
 	 * @return
 	 */
+	@Transaction
 	public boolean updateCustomer( long id, Map<String, Object> fieldMap ) {
 		return DatabaseHelper.updateEntity(Customer.class, id, fieldMap);
 	}
@@ -64,6 +67,7 @@ public class CustomerService {
 	 * @param id ID
 	 * @return
 	 */
+	@Transaction
 	public boolean deleteCustomer( long id ) {
 		return DatabaseHelper.deleteEntity(Customer.class, id);
 	}

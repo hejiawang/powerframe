@@ -8,9 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.wang.powerframe.helper.DatabaseHelper;
 import com.wang.powerframe.model.Customer;
 import com.wang.powerframe.service.CustomerService;
+import com.wang.powerframeJ.helper.DatabaseHelper;
 
 /**
  * 客户数据服务测试
