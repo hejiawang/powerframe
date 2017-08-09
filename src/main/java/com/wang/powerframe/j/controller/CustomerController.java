@@ -29,7 +29,7 @@ public class CustomerController {
 	 * @return
 	 */
 	@Action("get:/customer")
-	public View index( Param param ) {
+	public View index( ) {
 		List<Customer> customerList = customerService.getCustomerList();
 		return new View("customer_list.jsp").addModel("customerList", customerList);
 	}
@@ -52,7 +52,7 @@ public class CustomerController {
 	 * @return
 	 */
 	@Action("get:/customer_create")
-	public View create( Param param ) {
+	public View create(  ) {
 		return new View("customer_create.jsp");
 	}
 	
