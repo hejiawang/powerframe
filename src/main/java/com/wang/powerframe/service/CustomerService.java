@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import com.wang.powerframe.model.Customer;
 import com.wang.powerframeJ.annotation.Service;
 import com.wang.powerframeJ.annotation.Transaction;
+import com.wang.powerframeJ.bean.FileParam;
 import com.wang.powerframeJ.helper.DatabaseHelper;
+import com.wang.powerframeJ.helper.UploadHelper;
 
 /**
  * 提供客户数据服务
@@ -47,8 +49,12 @@ public class CustomerService {
 	 * @return
 	 */
 	@Transaction
-	public boolean createCustomer(Map<String, Object> fieldMap) {
-		return DatabaseHelper.insertEntity(Customer.class, fieldMap);
+	public boolean createCustomer(Map<String, Object> fieldMap, FileParam fileParam) {
+		boolean result = DatabaseHelper.insertEntity(Customer.class, fieldMap);
+		if( result ) {
+			UploadHelper.uploadFile("/tem/upload", fileParam);
+		}
+		return result;
 	}
 	
 	/**

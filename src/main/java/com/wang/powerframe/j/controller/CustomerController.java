@@ -9,6 +9,7 @@ import com.wang.powerframeJ.annotation.Action;
 import com.wang.powerframeJ.annotation.Controller;
 import com.wang.powerframeJ.annotation.Inject;
 import com.wang.powerframeJ.bean.Data;
+import com.wang.powerframeJ.bean.FileParam;
 import com.wang.powerframeJ.bean.Param;
 import com.wang.powerframeJ.bean.View;
 
@@ -63,8 +64,9 @@ public class CustomerController {
 	 */
 	@Action("post:/customer_create")
 	public Data createSubmit( Param param ) {
-		Map<String, Object> fieldMap = param.getMap();
-		boolean success = customerService.createCustomer(fieldMap);
+		Map<String, Object> fieldMap = param.getFieldMap();
+		FileParam fileParam = param.getFile("photo");
+		boolean success = customerService.createCustomer(fieldMap, fileParam);
 		return new Data(success);
 	}
 	
@@ -88,7 +90,7 @@ public class CustomerController {
 	@Action("put:/customer_edit")
 	public Data editSubmit( Param param ) {
 		long id = param.getLong("id");
-		Map<String, Object> fieldMap = param.getMap();
+		Map<String, Object> fieldMap =  param.getFieldMap();
 		boolean success = customerService.updateCustomer(id,fieldMap);
 		return new Data(success);
 	}
